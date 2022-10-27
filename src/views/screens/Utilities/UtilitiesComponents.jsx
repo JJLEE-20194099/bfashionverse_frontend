@@ -1,4 +1,4 @@
-import { Button, Image } from "native-base"
+import { Image } from "native-base"
 import { View, Text } from "react-native"
 import SvgUri from "react-native-svg-uri";
 import vectorImage from '../../../image/Vector.svg'
@@ -15,7 +15,7 @@ export default function UtilitiesComponents(props) {
         padding: 18,
         marginBottom: 5,
       }}
-      onTouchStart={() => props.navigation.navigate(props.name)}
+      onTouchEnd={() => props.navigation.navigate(props.name)}
     >
       <View
         style={{
@@ -50,7 +50,7 @@ export default function UtilitiesComponents(props) {
               color: "#BCBCBC",
             }}
           >
-            {props.content2}
+            {props?.content2}
           </Text>
         </View>
       </View>

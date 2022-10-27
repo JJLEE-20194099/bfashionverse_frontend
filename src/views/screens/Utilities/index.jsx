@@ -29,25 +29,30 @@ const item = [
   },
   {
     image: image4,
+    name: 'Search',
     content1: "Tìm kiếm bằng hình ảnh",
     content2: "Image searching",
   },
   {
     image: image5,
+    name: 'Cart',
     content1: "Khám phá giỏi hàng ",
     content2: "Cart Exploration",
   },
   {
     image: image6,
+    name: 'MyOrder',
     content1: "Lịch sử mua hàng",
     content2: "History",
   },
   {
+    name: 'MyOutfit',
     image: image7,
     content1: "Bộ đồ của tôi",
     content2: "My outfit",
   },
   {
+    name: 'Reviewer',
     image: image8,
     content1: "Danh sách Reviewer",
     content2: "Reviewer list",

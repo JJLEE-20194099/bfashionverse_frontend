@@ -2,10 +2,14 @@ import { Text, View } from "react-native";
 import { Image } from "native-base";
 
 export default function CategoryComponents(props) {
-  console.log(props.padding);
   return (
     <View
-      style={{ width: props.width, padding: props.padding, marginBottom: 28 }}
+      style={{
+        width: props.width,
+        padding: props.padding,
+        marginBottom: props.marginBottom,
+      }}
+      onTouchEnd={() => props.navigation.navigate('Search', 'bala')}
     >
       <Image
         shadow={2}

@@ -1,11 +1,8 @@
-
 import { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Avatar, Button, Input } from "native-base";
 import like from "../image/likeimage.svg";
 import comment from "../image/commentimage.svg";
-import seen from "../image/seenimage.svg";
-import share from "../image/shareimage.svg";
 import SvgUri from "react-native-svg-uri";
 
 export default function CommentComponents(props) {

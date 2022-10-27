@@ -1,17 +1,22 @@
-import React from 'react'
-import { Image, Actionsheet, useDisclose , Button, Avatar, Input } from "native-base";
-import { View, Text, FlatList, Dimensions } from "react-native";
+import {
+  Image,
+  Button,
+} from "native-base";
+import { View, Text, Dimensions } from "react-native";
 import SvgUri from "react-native-svg-uri";
-import like from '../image/likeimage.svg'
-import comment from '../image/commentimage.svg'
-import seen from '../image/seenimage.svg'
-import share from '../image/shareimage.svg'
-import CommentComponents from './CommentComponents';
+import like from "../image/likeimage.svg";
+import comment from "../image/commentimage.svg";
+import share from "../image/shareimage.svg";
+import SliderImageComponents from "./SliderImageComponents";
+import { Padding } from "../constants";
+import { useStore } from "../utils/context";
 
-export default function PostComponents() {
-    const { isOpen, onOpen, onClose } = useDisclose();
+export default function PostComponents(props) {
+  const {modelStore: {openModelComment}} = useStore()
   return (
-    <View style={{ backgroundColor: "white", padding: 18, marginBottom: 10 }}>
+    <View
+      style={{ backgroundColor: "white", marginBottom: 10, paddingBottom: 10 }}
+    >
       <View
         style={{
           display: "flex",
@@ -19,6 +24,9 @@ export default function PostComponents() {
           justifyContent: "space-between",
           alignItems: "center",
           marginBottom: 15,
+          paddingTop: Padding,
+          paddingLeft: Padding,
+          paddingRight: Padding,
         }}
       >
         <View
@@ -108,38 +116,40 @@ export default function PostComponents() {
             </View>
           </View>
         </View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            size={8}
-            style={{ backgroundColor: "#1A94FF", borderRadius: 50 }}
-          >
-            <Text style={{ fontSize: 20, color: "white" }}>+</Text>
-          </Button>
+        {/*    */}
+      </View>
+      <View>
+        {props?.review && (
           <Text
             style={{
-              fontSize: 12,
+              fontSize: 16,
               fontFamily: "Quicksand_500Medium",
-              color: "#BCBCBC",
+              paddingLeft: Padding,
+              paddingRight: Padding,
             }}
           >
-            Liên hệ
+            {props.review}
           </Text>
-        </View>
+        )}
       </View>
-      <View>
-        <Text style={{ fontSize: 16, fontFamily: "Quicksand_500Medium" }}>
-          “Bộ đồ khiến mình cảm giác tuyệt với trong lần hẹn hò đầu tiên vào mùa
-          đông lam
-        </Text>
-      </View>
-      <View>
-        <FlatList
+      <View onTouchEnd={() => props.navigation.navigate("SocialDetail")}>
+        <SliderImageComponents
+          imgs={[
+            {
+              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+            },
+            {
+              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+            },
+            {
+              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+            },
+            {
+              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+            },
+          ]}
+        />
+        {/* <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={[1, 2, 3, 4, 5, 6, 7, 8]}
@@ -157,9 +167,8 @@ export default function PostComponents() {
                 borderRadius: 8,
               }}
               alt="Alternate Text"
-            />
-          )}
-        />
+            /> */}
+        {/* )} /> */}
       </View>
       <View>
         <View
@@ -168,6 +177,9 @@ export default function PostComponents() {
             flexDirection: "row",
             justifyContent: "space-between",
             marginBottom: 5,
+            paddingLeft: Padding,
+            paddingRight: Padding,
+            paddingTop: 5,
           }}
         >
           <Button onPress={() => console.log("first")} variant="ghost">
@@ -190,7 +202,7 @@ export default function PostComponents() {
               </Text>
             </View>
           </Button>
-          <Button onPress={onOpen} variant="ghost">
+          <Button onPress={openModelComment} variant="ghost">
             <View
               style={{
                 display: "flex",
@@ -231,56 +243,18 @@ export default function PostComponents() {
             </View>
           </Button>
         </View>
-        <Text style={{ fontSize: 16, fontFamily: "Quicksand_500Medium" }}>
-          “Thời trang từ tháng 1 năm 2017 với vẻ ngoài khỏe khoắn có Fuji, Công
-          dân của Nhân loại, trang phục thường ngày, Packandgo, áo khoác dạ và
-          gearbest”
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: "Quicksand_500Medium",
+            paddingLeft: Padding,
+            paddingRight: Padding,
+            paddingBottom: Padding,
+          }}
+        >
+          {props.content}
         </Text>
       </View>
-      <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content height={Dimensions.get("screen").height * 0.6}>
-          <CommentComponents
-            content="If you want to fill a certain portion of the screen, but you don't want to use the flex layout, you can use percentage values in the component's style. Similar to flex dimensions, percentage dimensions require parent with a defined size."
-            like={[1, 2]}
-            reply={[
-              {
-                content:
-                  " tells a component to fill all available space, shared evenly amongst other components with the same parent. The larger the flex given, the higher the ratio of space a component will take compared to its siblings.",
-                like: [1, 2],
-                reply: [
-                  {
-                    content:
-                      "y expand to fill available space if its parent has dimensions greater than 0. If a parent does not have either a fixed width and height or flex, the parent will have dimensions of 0 and the flex children wil",
-                    like: [1, 2],
-                    reply: [],
-                  },
-                  {
-                    content:
-                      "LLL n only expand to fill available space if its parent has dimensions greater than 0. If a parent does not hav",
-                    like: [1, 2],
-                    reply: [],
-                  },
-                ],
-              },
-              { content: "LLL jlasjdfl", like: [1, 2], reply: [] },
-            ]}
-          />
-        </Actionsheet.Content>
-        <View style={{backgroundColor: 'white', display: 'flex', flexDirection: 'row', width: '100%',justifyContent: 'space-between', padding: 15,borderTopWidth: 0.5,borderColor: 'lightgray'}}>
-          <Avatar
-            bg="cyan.500"
-            source={{
-              uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-            }}
-            width="10"
-            height={"10"}
-          >
-            TE
-          </Avatar>
-          <Input style={{borderRadius: 30}} placeholder="Thêm bình luận" w='60%'/>
-          <Button>Đăng</Button>
-        </View>
-      </Actionsheet>
     </View>
   );
 }
