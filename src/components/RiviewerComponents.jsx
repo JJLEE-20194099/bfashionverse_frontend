@@ -14,7 +14,7 @@ import like from "../image/likeimage.svg";
 import comment from "../image/commentimage.svg";
 import share from "../image/shareimage.svg";
 import SliderReviewerComponents from "./SliderReviewerComponents";
-import { Padding } from "../constants";
+import { Padding, Purplerose1, Purplerose2, Purplerose3 } from "../constants";
 import { useStore } from "../utils/context";
 
 export default function RiviewerComponents(props) {
@@ -271,7 +271,7 @@ export default function RiviewerComponents(props) {
           }}
         >
           <View
-            style={{ backgroundColor: "#1A94FF", padding: 3, borderRadius: 50 }}
+            style={{ backgroundColor: Purplerose3, padding: 3, borderRadius: 50 }}
             onTouchStart={() => setShowModal(true)}
           >
             <AddIcon color="white" />

@@ -76,7 +76,8 @@ const StoryCircleListItem = (props) => {
                     style={{
                         width: size + 4,
                         ...styles.text,
-                        ...textStyle
+                        ...textStyle,
+                        fontFamily: 'Quicksand_500Medium'
                     }}>{item.user_name}</Text>}
         </View>
     );
@@ -103,6 +104,6 @@ const styles = StyleSheet.create({
         marginTop: 3,
         textAlign: "center",
         alignItems: "center",
-        fontSize: 11
+        // fontSize: 11
     }
 });

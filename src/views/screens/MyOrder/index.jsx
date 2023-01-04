@@ -47,38 +47,7 @@ export default function MyOrder({route}) {
             inactiveColor="gray"
           />
         )}
-        // initialLayout={{width: 150*5}}
       />
-      {/* <Tab.Navigator
-        initialLayout={{width: 150*6}}
-        tabBarOptions={{
-          activeTintColor: '#e91e63',
-          labelStyle: { fontSize: 12 },
-          style: { backgroundColor: 'white' },
-          over
-        }}
-        screenOptions={{
-          tabBarLabelStyle: {
-            fontSize: 12,
-            fontFamily: "Quicksand_700Bold",
-            textTransform: "capitalize",
-          },
-          tabBarItemStyle: { width: 150 },
-        }}
-      >
-        {Tabs.map((tab) => (
-          <Tab.Screen key={tab.id} name={tab.name}>
-            {(props) => (
-              <TabComponents
-                {...props}
-                key={tab.id}
-                id={tab.id}
-                name={tab.name}
-              />
-            )}
-          </Tab.Screen>
-        ))}
-      </Tab.Navigator> */}
     </View>
   );
 }

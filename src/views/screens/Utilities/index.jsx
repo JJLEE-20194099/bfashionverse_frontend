@@ -24,6 +24,7 @@ const item = [
   },
   {
     image: image3,
+    name: 'Cart',
     content1: "Tặng quà",
     content2: "Serve Gift",
   },

@@ -1,30 +1,52 @@
 import { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Keyboard } from "react-native";
 import { Avatar, Button, Input } from "native-base";
 import like from "../image/likeimage.svg";
 import comment from "../image/commentimage.svg";
 import SvgUri from "react-native-svg-uri";
+import { useStore } from "../utils/context";
+import { postRequestJson } from "../hooks/api";
+import { Purplerose1 } from "../constants";
+import LoadingCommentComponents from "./LoadingCommentComponents";
 
 export default function CommentComponents(props) {
-  const [reply, setReply] = useState();
-  const handleReply = () => {
-    if (props.reply.length > 0) {
-      if (reply === undefined) {
-        let rl = (
-          <>
-            <View>
-              {props.reply.map((rl,index) => (
-                <CommentComponents key={index} content={rl.content} like={rl.like} reply={rl.reply} />
-              ))}
-            </View>
-          </>
-        );
-        setReply(rl);
-      } else setReply(undefined);
+  const {
+    modelStore: { reactReply, idPost },
+  } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataComment, setDataComment] = useState({
+    data: [],
+    isSeeMore: false,
+  });
+  const [react, setReact] = useState({
+    quantity: props.like.length,
+    isReact: false,
+  });
+  const addDataComment = (text) => {
+    setDataComment((prev) => ({
+      ...prev,
+      data: [{ _id: "af", selfComment: text }, ...dataComment.data],
+    }));
+  };
+
+  const handleReply = async () => {
+    setIsLoading(true);
+    let data = [];
+    try {
+      data = await postRequestJson("reaction/list-react", {
+        id: props.id,
+        type: "react",
+      });
+      data = data.allReactions.filter((dt) => dt.reactionStatus == "Comment");
+      setDataComment((prev) => ({ data: [...prev.data, ...data], isSeeMore: true }));
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
     <ScrollView>
+      {/* <Input /> */}
       <View style={{ width: "100%" }}>
         <View
           style={{
@@ -77,10 +99,27 @@ export default function CommentComponents(props) {
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
             }}
           >
-            <Button onPress={() => console.log("first")} variant="ghost">
+            <Button
+              onPress={() => {
+                if (react.isReact) {
+                  setReact((prev) => ({
+                    isReact: false,
+                    quantity: prev.quantity - 1,
+                  }));
+                } else {
+                  setReact((prev) => ({
+                    isReact: true,
+                    quantity: prev.quantity + 1,
+                  }));
+                }
+                reactReply(idPost, "Like", props.id);
+              }}
+              variant="ghost"
+              width={"20%"}
+            >
               <View
                 style={{
                   display: "flex",
@@ -88,19 +127,29 @@ export default function CommentComponents(props) {
                   marginRight: 14,
                 }}
               >
-                <SvgUri width={14} fill="#444444" source={like} />
+                <SvgUri
+                  width={14}
+                  fill={react.isReact ? Purplerose1 : "#444444"}
+                  source={like}
+                />
                 <Text
                   style={{
-                    color: "#444444",
+                    color: react.isReact ? Purplerose1 : "#444444",
                     fontFamily: "Quicksand_500Medium",
                     marginLeft: 11,
                   }}
                 >
-                  1,5k
+                  {react.quantity}
                 </Text>
               </View>
             </Button>
-            <Button variant="ghost">
+            <Button
+              variant="ghost"
+              onPress={() => {
+                // addDataComment("asdfsdf ksdkfdk");
+                props.focusInput(addDataComment);
+              }}
+            >
               <View
                 style={{
                   display: "flex",
@@ -121,7 +170,16 @@ export default function CommentComponents(props) {
               </View>
             </Button>
           </View>
-            <Button variant={'ghost'} onPress={handleReply} style={{display: 'flex', justifyContent: 'flex-start',marginBottom: 20}}>
+          {!(dataComment.isSeeMore || isLoading) && (
+            <Button
+              variant={"ghost"}
+              onPress={handleReply}
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                marginBottom: 20,
+              }}
+            >
               <Text
                 style={{
                   color: "#444444",
@@ -131,9 +189,25 @@ export default function CommentComponents(props) {
                 Xem 121 bình luận
               </Text>
             </Button>
+          )}
         </View>
       </View>
-      <View style={{ paddingLeft: 20 }}>{reply}</View>
+      <View style={{ paddingLeft: 20 }}>
+        {
+          <View>
+            {dataComment.data.map((dt) => (
+              <CommentComponents
+                content={dt.selfComment}
+                like={[1, 2]}
+                id={dt._id}
+                key={dt._id}
+                focusInput={props.focusInput}
+              />
+            ))}
+          </View>
+        }
+        {isLoading && <LoadingCommentComponents num={2} />}
+      </View>
     </ScrollView>
   );
 }

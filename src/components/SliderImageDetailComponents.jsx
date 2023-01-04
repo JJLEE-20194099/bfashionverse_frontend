@@ -39,6 +39,7 @@ const SliderImageDetailComponents = (props) => {
       >
         {props.imgs.map((img, idx) => (
           <View
+            key={idx}
             style={{
               backgroundColor: index === idx ? "#6BBAFF" : "white",
               height: 5,

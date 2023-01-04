@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { router, screens, screensTransparent } from "./src/routes";
-import { Image, Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import {  Text, StyleSheet, View } from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { Badge } from "react-native-elements";
 import { Purplerose2 } from "./src/constants";
@@ -14,32 +14,12 @@ import {
 } from "@expo-google-fonts/quicksand";
 import SvgUri from "react-native-svg-uri";
 import ModelComponents from "./src/components/ModelComponents";
-import { useStore } from "./src/utils/context";
 import ModelNewsComponents from "./src/views/screens/FashionSocial/ModelNewsComponents";
-import Auth from "./src/views/screens/Auth";
+import { useEffect } from "react";
+import { GetStorage } from "./src/hooks/api";
+import ModelInput from "./src/components/ModelInput";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-const styles = StyleSheet.create({
-  headerLeft: {
-    marginLeft: 5,
-  },
-  logoLeft: {
-    height: 32,
-    width: 90,
-  },
-  logoRight: {
-    height: 20,
-    width: 20,
-  },
-  headerRight: {
-    marginRight: 5,
-  },
-  styleLogo: {
-    width: 20,
-    height: 20,
-  },
-});
 
 const CartIcon = ({ navigation }) => {
   // const {cartStore: {order}} = useStore()
@@ -61,6 +41,13 @@ const CartIcon = ({ navigation }) => {
 };
 
 const TabMain = () => {
+  useEffect(()=>{
+    (
+      async()=>{
+        await GetStorage()
+      }
+    )()
+  })
   return (
     <Tab.Navigator
       screenOptions={{
@@ -89,12 +76,14 @@ const TabMain = () => {
               <View
                 style={{
                   backgroundColor: "white",
-                  height: 80,
+                  // height: 80,
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  paddingTop: 20,
+                  // paddingTop: 20,
+                  padding: 10,
+                  paddingTop: 15,
                   alignContent: "center",
                 }}
               >
@@ -153,6 +142,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <ModelComponents />
+      <ModelInput />
       <ModelNewsComponents />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="main">

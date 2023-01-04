@@ -24,8 +24,8 @@ export default function ProductDetail({ navigation, route }) {
     return dt
   }
   return (
-    <View>
-      <ScrollView style={{ height: Dimensions.get("screen").height - 80 }}>
+    <View style={{height: '100%',flex: "auto 1"}}>
+      <ScrollView>
         <View style={{ width: "100%", height: 450 }}>
           <SliderImageDetailComponents
             imgs={[
@@ -219,7 +219,6 @@ export default function ProductDetail({ navigation, route }) {
               <View style={{ width: 120, marginRight: 16 }}>
                 <View style={{ marginBottom: 20 }}>
                   <ProductComponents
-                    padding={0}
                     width={"100%"}
                     height={120}
                     navigation={navigation}
@@ -233,7 +232,6 @@ export default function ProductDetail({ navigation, route }) {
                 {
                  item[1]&&<View>
                   <ProductComponents
-                    padding={0}
                     width={"100%"}
                     height={120}
                     navigation={navigation}

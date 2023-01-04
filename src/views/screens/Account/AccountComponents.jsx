@@ -5,20 +5,22 @@ import { Text, View } from "react-native";
 import { Purplerose1, Purplerose2 } from "../../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { getRequest, RemoveStorage, SetStorage } from "../../../hooks/api";
-export default function AccountComponents() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [user, setUser] = useState();
+import { useStore } from "../../../utils/context";
+import { observer } from "mobx-react";
+const AccountComponents = observer(() => {
+  const {
+    authStore: { user, setUser },
+  } = useStore();
   const navigation = useNavigation();
   useEffect(() => {
-    (async () => {
-      setIsLogin(false);
-      let data = await getRequest("user/");
-      console.log(data)
-      if (data) {
-        setUser(data);
-        setIsLogin(true);
-      }
-    })();
+    if (!user) {
+      (async () => {
+        let data = await getRequest("user/");
+        if (data) {
+          setUser(data);
+        }
+      })();
+    }
   }, []);
   return (
     <View
@@ -47,7 +49,7 @@ export default function AccountComponents() {
         >
           TS
         </Avatar>
-        {isLogin ? (
+        {user ? (
           <View style={{ marginLeft: 10 }}>
             <Text style={{ fontSize: 20, fontFamily: "Quicksand_700Bold" }}>
               {user?.name}
@@ -84,12 +86,12 @@ export default function AccountComponents() {
           </View>
         )}
       </View>
-      {isLogin && (
+      {user && (
         <Button
           variant={"ghost"}
           onPress={async () => {
             await RemoveStorage();
-            setIsLogin(false);
+            setUser(null)
           }}
         >
           <AntDesign name="logout" size={24} color={Purplerose2} />
@@ -97,4 +99,5 @@ export default function AccountComponents() {
       )}
     </View>
   );
-}
+});
+export default AccountComponents;

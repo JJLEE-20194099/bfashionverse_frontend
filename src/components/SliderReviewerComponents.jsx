@@ -1,5 +1,11 @@
 import React, { useRef, useState } from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 import { SimpleCarousel } from "@wecraftapps/react-native-simple-carousel";
 import { Image } from "native-base";
@@ -31,50 +37,52 @@ const SliderReviewerComponents = (props) => {
           {props.review[index]}
         </SeeMore>
       </View>
-      <View
-        style={styles.container}
-        onTouchEnd={() => props.navigation.navigate("SocialDetail")}
+      <TouchableWithoutFeedback
+        onPress={() => props.navigation.navigate("SocialDetail")}
       >
-        <SimpleCarousel ref={carouselRef} setIndex={setIndex}>
-          {props.imgs.map((img) => (
-            <View style={styles.page}>
-              <Image
-                source={{
-                  uri: img.uri,
-                }}
-                key={index}
-                style={{
-                  width: "100%",
-                  height: 200,
-                  resizeMode: "cover",
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                alt="asdf"
-              />
-            </View>
-          ))}
-        </SimpleCarousel>
+        <View style={styles.container}>
+          <SimpleCarousel ref={carouselRef} setIndex={setIndex}>
+            {props.imgs.map((img, idx) => (
+              <View style={styles.page} key={idx}>
+                <Image
+                  source={{
+                    uri: img.uri,
+                  }}
+                  key={index}
+                  style={{
+                    width: "100%",
+                    height: 200,
+                    resizeMode: "cover",
+                    borderRadius: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  alt="asdf"
+                />
+              </View>
+            ))}
+          </SimpleCarousel>
 
-        <View
-          style={[
-            styles.paginationContainer,
-            { width: quantity * 5 + (quantity - 1) * 6 },
-          ]}
-        >
-          {props.imgs.map((img, idx) => (
-            <View
-              style={{
-                backgroundColor: index === idx ? "#6BBAFF" : "white",
-                height: 5,
-                width: 5,
-                borderRadius: 50,
-              }}
-            />
-          ))}
+          <View
+            style={[
+              styles.paginationContainer,
+              { width: quantity * 5 + (quantity - 1) * 6 },
+            ]}
+          >
+            {props.imgs.map((img, idx) => (
+              <View
+                key={idx}
+                style={{
+                  backgroundColor: index === idx ? "#6BBAFF" : "white",
+                  height: 5,
+                  width: 5,
+                  borderRadius: 50,
+                }}
+              />
+            ))}
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
       <View style={{ paddingLeft: Padding, paddingRight: Padding }}>
         <SeeMore
           numberOfLines={3}
@@ -99,14 +107,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   page: {
-    width: Dimensions.get('screen').width - 2*Padding,
+    width: Dimensions.get("screen").width - 2 * Padding,
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
   paginationContainer: {
     flex: 1,
-
     position: "absolute",
     flexDirection: "row",
     justifyContent: "space-around",

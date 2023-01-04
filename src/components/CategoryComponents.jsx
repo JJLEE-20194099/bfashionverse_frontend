@@ -1,37 +1,40 @@
-import { Text, View } from "react-native";
+import { Text, TouchableWithoutFeedback, View } from "react-native";
 import { Image } from "native-base";
 
 export default function CategoryComponents(props) {
   return (
-    <View
-      style={{
-        width: props.width,
-        padding: props.padding,
-        marginBottom: props.marginBottom,
-      }}
-      onTouchEnd={() => props.navigation.navigate('Search', 'bala')}
+    <TouchableWithoutFeedback
+      onPress={() => props.navigation.navigate("Search", "bala")}
     >
-      <Image
-        shadow={2}
-        source={{
-          uri: "https://pbs.twimg.com/media/E8-zubHVcAA5Z1V.jpg:large",
+      <View
+        style={{
+          width: props.width,
+          padding: props.padding,
+          marginBottom: props.marginBottom,
         }}
-        alt="Alternate Text"
-        width={"100%"}
-        height={props.height}
-        style={{ borderRadius: 16 }}
-      />
-      <View>
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: "Quicksand_500Medium",
-            marginTop: 8,
+      >
+        <Image
+          shadow={2}
+          source={{
+            uri: "https://pbs.twimg.com/media/E8-zubHVcAA5Z1V.jpg:large",
           }}
-        >
-          Product Title
-        </Text>
+          alt="Alternate Text"
+          width={"100%"}
+          height={props.height}
+          style={{ borderRadius: 16 }}
+        />
+        <View>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Quicksand_500Medium",
+              marginTop: 8,
+            }}
+          >
+            Product Title
+          </Text>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }

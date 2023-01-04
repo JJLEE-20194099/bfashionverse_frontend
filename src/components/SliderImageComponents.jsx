@@ -20,7 +20,7 @@ const SliderImageComponents = (props) => {
               key={index}
               style={{
                 width: "100%",
-                height: 200,
+                height: props.height? props.height:200,
                 resizeMode: "cover",
                 borderRadius: 10,
                 justifyContent: "center",
@@ -40,6 +40,7 @@ const SliderImageComponents = (props) => {
       >
         {props.imgs.map((img, idx) => (
           <View
+            key={idx}
             style={{
               backgroundColor: index === idx ? "#6BBAFF" : "white",
               height: 5,

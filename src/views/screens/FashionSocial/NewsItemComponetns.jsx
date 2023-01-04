@@ -11,6 +11,7 @@ export default function NewsItemComponetns({ id }) {
       style={{
         alignItems: "center",
         padding: Padding,
+        paddingBottom: 5,
         position: "relative",
       }}
       onTouchEnd={() => {
@@ -25,22 +26,21 @@ export default function NewsItemComponetns({ id }) {
           uri: "https://file.tinnhac.com/resize/600x-/2022/07/22/20220722105253-c4be.jpg",
         }}
       />
-
-      <Text
+      <View
         style={{
           backgroundColor: "#22D3EE",
           width: 20,
           height: 20,
           color: "white",
-          textAlign: "center",
           borderRadius: 50,
+          borderTopLeftRadius: 50,
           position: "absolute",
           right: 10,
-          bottom: 30,
+          bottom: 25,
         }}
       >
-        +
-      </Text>
+        <Text style={{textAlign: "center"}}>+</Text>
+      </View>
 
       <Text style={{ fontFamily: "Quicksand_500Medium" }}>quancj</Text>
     </View>

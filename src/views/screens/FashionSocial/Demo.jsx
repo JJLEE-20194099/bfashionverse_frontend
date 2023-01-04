@@ -55,6 +55,7 @@ export default function Demo() {
       style={{
         display: "flex",
         flexDirection: "row",
+        alignItems: 'flex-end',
         backgroundColor: "white",
         borderBottomWidth: 1,
         borderColor: "lightgray",

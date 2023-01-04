@@ -1,18 +1,34 @@
+import { Image, Button } from "native-base";
 import {
-  Image,
-  Button,
-} from "native-base";
-import { View, Text, Dimensions } from "react-native";
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
 import SvgUri from "react-native-svg-uri";
 import like from "../image/likeimage.svg";
 import comment from "../image/commentimage.svg";
 import share from "../image/shareimage.svg";
 import SliderImageComponents from "./SliderImageComponents";
-import { Padding } from "../constants";
+import { Padding, Purplerose1, Purplerose2 } from "../constants";
 import { useStore } from "../utils/context";
+import { useState } from "react";
 
 export default function PostComponents(props) {
-  const {modelStore: {openModelComment}} = useStore()
+  // console.log(props)
+  const {
+    modelStore: { openModelComment, setIdPost },
+    fashionSocialStore: { reactPost },
+  } = useStore();
+  const [react, setReact] = useState({
+    quantity: props.numOfReacts
+      ? Object.keys(props.numOfReacts).reduce(
+          (prev, curent) => (prev = prev + p[curent]),
+          0
+        )
+      : 0,
+    isReact: false,
+  });
   return (
     <View
       style={{ backgroundColor: "white", marginBottom: 10, paddingBottom: 10 }}
@@ -38,14 +54,22 @@ export default function PostComponents(props) {
             marginBottom: 5,
           }}
         >
-          <Image
-            size={50}
-            alt="fallback text"
-            borderRadius={100}
-            source={{
-              uri: "https://pbs.twimg.com/media/E8-zubHVcAA5Z1V.jpg:large",
-            }}
-          />
+          <TouchableWithoutFeedback
+            onPress={() =>
+              props.navigation.navigate("MyOutfit", {
+                id: props.id,
+              })
+            }
+          >
+            <Image
+              size={50}
+              alt="fallback text"
+              borderRadius={100}
+              source={{
+                uri: "https://pbs.twimg.com/media/E8-zubHVcAA5Z1V.jpg:large",
+              }}
+            />
+          </TouchableWithoutFeedback>
           <View style={{ marginLeft: 14 }}>
             <Text
               style={{
@@ -54,7 +78,7 @@ export default function PostComponents(props) {
                 fontFamily: "Quicksand_700Bold",
               }}
             >
-              artlynnnn
+              {props.name||"Alice"}
             </Text>
             <View
               style={{ display: "flex", flexDirection: "row", marginLeft: 2 }}
@@ -74,7 +98,7 @@ export default function PostComponents(props) {
                     marginLeft: 6,
                   }}
                 >
-                  1,5k
+                  15k
                 </Text>
               </View>
               <View
@@ -132,44 +156,28 @@ export default function PostComponents(props) {
           </Text>
         )}
       </View>
-      <View onTouchEnd={() => props.navigation.navigate("SocialDetail")}>
-        <SliderImageComponents
-          imgs={[
-            {
-              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
-            },
-            {
-              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
-            },
-            {
-              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
-            },
-            {
-              uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
-            },
-          ]}
-        />
-        {/* <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={[1, 2, 3, 4, 5, 6, 7, 8]}
-          renderItem={({ item, index }) => (
-            <Image
-              source={{
+      <TouchableWithoutFeedback
+        onPress={() => props.navigation.navigate("SocialDetail")}
+      >
+        <View>
+          <SliderImageComponents
+            imgs={[
+              {
                 uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
-              }}
-              key={index}
-              style={{
-                width: 300,
-                height: 190,
-                resizeMode: "cover",
-                margin: 8,
-                borderRadius: 8,
-              }}
-              alt="Alternate Text"
-            /> */}
-        {/* )} /> */}
-      </View>
+              },
+              {
+                uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+              },
+              {
+                uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+              },
+              {
+                uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+              },
+            ]}
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <View>
         <View
           style={{
@@ -182,7 +190,26 @@ export default function PostComponents(props) {
             paddingTop: 5,
           }}
         >
-          <Button onPress={() => console.log("first")} variant="ghost">
+          <Button
+            onPress={() => {
+              reactPost(props.id, "Like");
+              if (react.isReact) {
+                setReact((prev) => ({
+                  ...prev,
+                  isReact: !prev.isReact,
+                  quantity: prev.quantity - 1,
+                }));
+              } else {
+                setReact((prev) => ({
+                  ...prev,
+                  isReact: !prev.isReact,
+                  quantity: prev.quantity + 1,
+                }));
+              }
+            }}
+            variant="ghost"
+            width={"33%"}
+          >
             <View
               style={{
                 display: "flex",
@@ -190,19 +217,30 @@ export default function PostComponents(props) {
                 marginRight: 14,
               }}
             >
-              <SvgUri width={14} fill="#444444" source={like} />
+              <SvgUri
+                width={14}
+                fill={react.isReact ? Purplerose1 : "#444444"}
+                source={like}
+              />
               <Text
                 style={{
-                  color: "#444444",
+                  color: react.isReact ? Purplerose1 : "#444444",
                   fontFamily: "Quicksand_500Medium",
                   marginLeft: 11,
                 }}
               >
-                1,5k
+                {react.quantity}
               </Text>
             </View>
           </Button>
-          <Button onPress={openModelComment} variant="ghost">
+          <Button
+            onPress={() => {
+              openModelComment();
+              setIdPost(props.id);
+            }}
+            variant="ghost"
+            width={"33%"}
+          >
             <View
               style={{
                 display: "flex",
@@ -222,7 +260,7 @@ export default function PostComponents(props) {
               </Text>
             </View>
           </Button>
-          <Button variant="ghost">
+          <Button variant="ghost" width={"33%"}>
             <View
               style={{
                 display: "flex",

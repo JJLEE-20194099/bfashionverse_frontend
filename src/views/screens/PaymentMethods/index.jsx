@@ -40,11 +40,8 @@ const delivery = [
 const PaymentMethods = () => {
   const [value, setValue] = useState(0);
   return (
-    <View>
+    <View style={{height: '100%',flex: "auto 1"}}>
       <ScrollView
-        style={{
-          height: Dimensions.get("screen").height - 180,
-        }}
       >
         <View style={{ backgroundColor: "white", padding: Padding }}>
           <Text>Chon phuong thuc thanh toan</Text>

@@ -1,4 +1,10 @@
-import { Text, View, ScrollView, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import SvgUri from "react-native-svg-uri";
 import vectorImage from "../../../image/Vector.svg";
@@ -14,56 +20,59 @@ export default function OrderConfirmation({ navigation }) {
   } = useStore();
   const orderConfirm = order.filter((o) => o.isSelect == true);
   return (
-    <View>
-      <ScrollView style={{ height: Dimensions.get("screen").height - 180 }}>
-        <View
-          style={{
-            padding: Padding,
-            backgroundColor: "white",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
-          onTouchEnd={()=>navigation.navigate('DeliveryAddress')}
+    <View style={{ height: "100%", flex: "auto 1" }}>
+      <ScrollView>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("DeliveryAddress")}
         >
-          <View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                paddingBottom: 10,
-              }}
-            >
-              <Entypo name="location" size={24} color={Purplerose2} />
-              <Text
+          <View
+            style={{
+              padding: Padding,
+              backgroundColor: "white",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+            }}
+          >
+            <View>
+              <View
                 style={{
-                  fontFamily: "Quicksand_700Bold",
-                  fontSize: 16,
-                  paddingLeft: 10,
-                  color: Purplerose2,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingBottom: 10,
                 }}
               >
-                Do Manh Quan
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Quicksand_700Bold",
-                  fontSize: 16,
-                  paddingLeft: 10,
-                  color: Purplerose2,
-                }}
-              >
-                0374542455
+                <Entypo name="location" size={24} color={Purplerose2} />
+                <Text
+                  style={{
+                    fontFamily: "Quicksand_700Bold",
+                    fontSize: 16,
+                    paddingLeft: 10,
+                    color: Purplerose2,
+                  }}
+                >
+                  Do Manh Quan
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Quicksand_700Bold",
+                    fontSize: 16,
+                    paddingLeft: 10,
+                    color: Purplerose2,
+                  }}
+                >
+                  0374542455
+                </Text>
+              </View>
+              <Text style={{ fontFamily: "Quicksand_500Medium", fontSize: 14 }}>
+                204 Le thanh nghi, Phuong Dong tam, Quan Hai Ba ad, Ha noi
               </Text>
             </View>
-            <Text style={{ fontFamily: "Quicksand_500Medium", fontSize: 14 }}>
-              204 Le thanh nghi, Phuong Dong tam, Quan Hai Ba ad, Ha noi
-            </Text>
+            <SvgUri source={vectorImage} fill={Purplerose2} />
           </View>
-          <SvgUri source={vectorImage} fill={Purplerose2} />
-        </View>
+        </TouchableWithoutFeedback>
         <DeliveryComponents />
         {orderConfirm.map((oc) => (
           <OrderCartComponents
@@ -73,101 +82,45 @@ export default function OrderConfirmation({ navigation }) {
             quantity={oc.quantity}
           />
         ))}
-        {/* <View
-          style={{
-            marginTop: 10,
-            backgroundColor: "white",
-            padding: Padding,
-            marginBottom: 10,
-          }}
+
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("PaymentMethods")}
         >
-          <Text
-            style={{
-              fontFamily: "Quicksand_700Bold",
-              fontSize: 16,
-              paddingBottom: 10,
-              color: Purplerose2,
-            }}
-          >
-            Phuong thuc giao hang
-          </Text>
           <View
             style={{
+              padding: Padding,
+              backgroundColor: "white",
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "flex-start",
+              alignItems: "center",
+              marginTop: 5,
             }}
           >
             <View>
-              <Text
-                style={{
-                  fontFamily: "Quicksand_700Bold",
-                  fontSize: 16,
-                  color: Purplerose2,
-                }}
-              >
-                Giao hang nhanh
-              </Text>
-              <Text style={{ fontFamily: "Quicksand_500Medium", fontSize: 14 }}>
-                Nhan hang vao thu 5 tuan nay
-              </Text>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: "Quicksand_700Bold",
+                    fontSize: 16,
+                    color: Purplerose2,
+                  }}
+                >
+                  Phuong thuc thanh toan
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Quicksand_500Medium",
+                    fontSize: 16,
+                  }}
+                >
+                  Thanh toan tien mat
+                </Text>
+              </View>
             </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  paddingRight: 8,
-                  fontFamily: "Quicksand_700Bold",
-                  fontSize: 16,
-                }}
-              >
-                20000đ
-              </Text>
-              <SvgUri source={vectorImage} fill={Purplerose2} />
-            </View>
+            <SvgUri source={vectorImage} fill={Purplerose2} />
           </View>
-        </View> */}
-        <View
-          style={{
-            padding: Padding,
-            backgroundColor: "white",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 5
-          }}
-          onTouchEnd={()=>navigation.navigate('PaymentMethods')}
-        >
-          <View>
-            <View>
-              <Text
-                style={{
-                  fontFamily: "Quicksand_700Bold",
-                  fontSize: 16,
-                  color: Purplerose2,
-                }}
-              >
-                Phuong thuc thanh toan
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Quicksand_500Medium",
-                  fontSize: 16,
-                }}
-              >
-                Thanh toan tien mat
-              </Text>
-            </View>
-          </View>
-          <SvgUri source={vectorImage} fill={Purplerose2} />
-        </View>
+        </TouchableWithoutFeedback>
         <View
           style={{
             padding: Padding,

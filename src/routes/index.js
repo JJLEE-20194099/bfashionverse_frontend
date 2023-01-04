@@ -22,6 +22,8 @@ import DeliveryAddress from "../views/screens/DeliveryAddress";
 import Auth from "../views/screens/Auth";
 import AuthPassword from "../views/screens/Auth/AuthPassword";
 import EditImage from "../views/screens/EditImage";
+import MyPostCreate from "../views/screens/MyPostCreate";
+import InputKeyboard from "../test/InputKeyboard";
 
 export const router = [
   {
@@ -48,7 +50,7 @@ export const router = [
     name: "Utilities",
     component: Utilities,
     icon: UtilitiesImage,
-  },
+  }
 ];
 
 export const screens = [
@@ -91,6 +93,10 @@ export const screens = [
   {
     name: 'AuthPassword',
     component: AuthPassword
+  },
+  {
+    name: 'MyPostCreate',
+    component: MyPostCreate
   }
 ];
 

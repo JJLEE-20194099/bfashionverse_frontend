@@ -11,6 +11,7 @@ export default function Home({ navigation }) {
   } = useStore();
   return (
     <ScrollView
+      scrollEventThrottle={16}
       onScroll={({
         nativeEvent: { contentOffset, layoutMeasurement, contentSize },
       }) => {
@@ -37,7 +38,7 @@ export default function Home({ navigation }) {
           renderItem={({ item, index }) => (
             <Image
               source={{
-                uri: "https://icdn.dantri.com.vn/thumb_w/770/2022/02/28/rose-2-1646032942820.png",
+                uri: "https://achaumedia.vn/wp-content/uploads/2020/07/chup-anh-thoi-trang-1.jpg",
               }}
               key={index}
               style={{

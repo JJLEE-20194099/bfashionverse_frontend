@@ -3,22 +3,24 @@ import { Button, Image, Input } from "native-base";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { Padding, Purplerose1 } from "../../../constants";
-import { GetStorage, postRequest, SetStorage } from "../../../hooks/api";
+import { GetStorage, postRequestJson, SetStorage } from "../../../hooks/api";
+import { useStore } from "../../../utils/context";
 
 export default function Auth({ navigation }) {
   const [isNumber, setIsNumber] = useState(true);
-  useEffect(() => {
-    (async () => {
-      let data = await postRequest("auth/", {
-        loginFieldName: "0969973012",
-        type: "User",
-        password: "123",
-        loginType: "Phone",
-      });
-      await SetStorage(data['accessToken'])
-      console.log(await GetStorage())
-    })();
-  }, []);
+  const [accout, setaccout] = useState()
+  // useEffect(() => {
+  //   (async () => {
+  //     let data = await postRequestJson("auth/", {
+  //       loginFieldName: "0969973012",
+  //       type: "User",
+  //       password: "123",
+  //       loginType: "Phone",
+  //     });
+  //     await SetStorage(data['accessToken'])
+  //     console.log(await GetStorage())
+  //   })();
+  // }, []);
   const type = {
     number: {
       title: "Dang nhap hoac tao tai khoan",
@@ -59,10 +61,14 @@ export default function Auth({ navigation }) {
           size="lg"
           keyboardType={type[isNumber ? "number" : "gmail"].type}
           fontFamily="Quicksand_500Medium"
+          value={accout}
+          onChangeText={value => setaccout(value)}
         />
         <Button
           backgroundColor={Purplerose1}
-          onPress={() => navigation.navigate("AuthPassword")}
+          onPress={() => {
+            navigation.navigate("AuthPassword", {"accout": accout})}
+          } 
         >
           Tiep tuc
         </Button>

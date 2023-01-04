@@ -3,6 +3,7 @@ import { View,Text ,FlatList, ScrollView} from "react-native";
 import CategoryComponents from "../../../components/CategoryComponents";
 import { useState } from "react";
 import CategorySideBarComponents from "../../../components/CategorySideBarComponents";
+import { Purplerose2 } from "../../../constants";
 
 
 export default function Categories({navigation}) {
@@ -59,7 +60,7 @@ export default function Categories({navigation}) {
         ))} */}
         <FlatList
           data={data}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.key}
           renderItem={({ item }) => (
             <View
               style={{
@@ -68,7 +69,7 @@ export default function Categories({navigation}) {
                 paddingTop: 5,
                 paddingBottom: 5,
                 borderLeftWidth: index == item.key ? 3 : 0,
-                borderLeftColor: "#1A94FF",
+                borderLeftColor: Purplerose2,
                 marginBottom: 1,
               }}
               onTouchEnd={() => setIndex(item.key)}
